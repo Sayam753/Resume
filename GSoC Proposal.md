@@ -10,14 +10,14 @@
 ```python
 # Base class for Approximation
 class Approximation:
-    
+
     # Defining parameters
     def __init__(self, model, size, random_seed=None):
         self.model = model
         self.size = size
         self.random_seed = random_seed
         # Handle initialization of mu and std
-        
+
     @property
     def mean(self):
         return self.mu
@@ -35,20 +35,20 @@ class Approximation:
 
 ```python
 class MeanField(Approximation):
-    
+
     def __init__(self, model, size, random_seed):
         super().__init__(model, size, random_seed)
-        
+
     def cov(self):
         sq = tf.math.square(self.std)
         return tf.linalg.diag_part(sq)
 
 
 class FullRank(Approximation):
-    
+
     def __init__(self, model, size, random_seed):
         super().__init__(model, size, random_seed)
-    
+
     def L(self):
         n = self.size
         entries = n*(n+1)//2
@@ -56,7 +56,7 @@ class FullRank(Approximation):
         L[np.tril_indices(n)] = np.arange(entries)
         L[np.tril_indices(n)[::-1]] = np.arange(entries)
         return L
-        
+
     def cov(self):
         L = self.L
         return tf.linalg.matmul(L, tf.transpose(L))
@@ -64,20 +64,20 @@ class FullRank(Approximation):
 
 ```python
 def fit(model, n=10000, random_seed=None, method='MeanFieldADVI'):
-    
+
     # Transform the model into an unconstrained space
     _, state = pm.evaluate_model_transformed(model)
     logpt = state.collect_log_prob()
-        
+
     # Collect the free random variables
     untransformed = state.untransformed_values
     free_RVs = untransformed.update(state.transformed_values)
-    
+
     # Not sure about the use of local random variables
     size = 0
     for name, dist in free_RVs.items():
         size += int(np.prod(dist.event_shape))
-    
+
     approx = None
     if method == "MeanFieldADVI":
         approx = MeanField(model, size, random_seed)
@@ -87,9 +87,9 @@ def fit(model, n=10000, random_seed=None, method='MeanFieldADVI'):
     # Create variational gradient tensor
     q = approx.random()
     elbo = q + tf.reduce_sum(approx.std) + 0.5*size*(1 + tf.math.log(2.0*np.pi))
-    
+
     # Set up optimizer
-    
+
     # Draw samples from variational posterior
 
     # TODO: Plot the trace using ArviZ
@@ -129,17 +129,17 @@ I encountered installation issues while setting up the working environment using
 
 ## Personal Projects
 
-1. Send to S3 - [Github](https://github.com/Sayam753/SendToS3) <br/>
+1. [Send to S3](https://github.com/Sayam753/SendToS3) <br/>
 This python project sends backup files to AWS S3 bucket using Boto3. Searching for files is done by regex and results of logs are sent to email using smtplib.
 
-2. Osint-Spy - [Github](https://github.com/Sayam753/OSINT-SPY) <br/>
+2. [Osint-Spy](https://github.com/Sayam753/OSINT-SPY) <br/>
 This Python project performs Osint scan on email, domain, ip, organization, etc.
 This information can be used by Data Miners or Penetration Testers in order to find deep information about their target.
 
-3. Turbofan Degradation - [Colab](https://colab.research.google.com/drive/1sCZcJSmRarYbQKDYeaqiLnzXyzFolRC0) <br/>
-Implemented a Deep learning based Encoder-Decoder model ([paper](https://www.researchgate.net/publication/336150924_A_Novel_Deep_Learning-Based_Encoder-Decoder_Model_for_Remaining_Useful_Life_Prediction)) for analysing the turbofan degradation dataset provided by NASA.
+3. [Turbofan Degradation](https://colab.research.google.com/drive/1sCZcJSmRarYbQKDYeaqiLnzXyzFolRC0) <br/>
+Implemented [Deep learning based Encoder-Decoder model](https://www.researchgate.net/publication/336150924_A_Novel_Deep_Learning-Based_Encoder-Decoder_Model_for_Remaining_Useful_Life_Prediction) for analysing the turbofan degradation dataset provided by NASA.
 
-4. Neural Network from Scratch - [Colab](https://colab.research.google.com/drive/1iU38tTeEvUI_sjt6vVAuhedMWOPUdr5E) <br/>
+4. [Neural Network from Scratch](https://colab.research.google.com/drive/1iU38tTeEvUI_sjt6vVAuhedMWOPUdr5E) <br/>
 Implemented a deep neural network from scratch in numpy with custom hyperparameters.
 
 ## Basic/Contact Information
