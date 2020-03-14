@@ -95,7 +95,26 @@ def fit(model, n=10000, random_seed=None, method='MeanFieldADVI'):
     # TODO: Plot the trace using ArviZ
 ```
 
+## Key Challenges
+
+1. **theano.clone equivalent for Tf2**: For drawing samples from posterior, we need to replace some nodes of the graph with variational distributions. PyMC3 achieves this by using `theano.clone`. Tensorflow v1 implements some similar functions in the `contrib` module - [tf.contrib.copy_graph](https://www.tensorflow.org/versions/r1.15/api_docs/python/tf/contrib/copy_graph). But the tf.contrib has been deprecated in TF2. Support of symbolic graph manipulations has also been removed.
+    - `tf.keras.backend` can be used for symbolic graphs.
+    - `tf-nightly` provides [tf.raw_ops.Copy](https://www.tensorflow.org/api_docs/python/tf/raw_ops/Copy) for recursive deep copying of tensor. Maybe it is possible to implement a feature similar to `theano.clone` by looking upon implementations of both `copy_graph`(in tf.v1) and `Copy`(in tf.nightly).
+
+2. Provide an interface for flattened view of variables. PyMC3 does this using `theano.ravel()`. Maybe it can be accomplished by `tf.reshape`.
+
+3. Design an interface to account for minibatches.
+
+4. Figure out a way to optimize ELBO. `tf.keras.optimizers` is an option or provide an iterative optimization algorithm.
+
+5. Handle the initialization of means and stds for MeanField and Full Rank ADVI.
+
+6. Provide a reusable interface to implement more inference algorithms (SVGD, ASVGD).
+
+7. Progress Bar ?
+
 ## Contributing to PyMC4
+
 1. Pull Request [#220](https://github.com/pymc-devs/pymc4/pull/220) (Merged): Add AutoRegressive distribution - <br/>
 This PR added Auto Regressive distribution by wrapping `sts.AutoRegressive` Model. The main task was to call `make_state_space_model` method with suitable arguments to capture the underlying the `tfd.LinearGaussianStateSpaceModel`. It took a lot of debugging to make this AR class compatible with PyMC4.
 
@@ -109,6 +128,7 @@ This small PR fixed typos and variable names in `pymc4_design_guide.ipynb`.
 I encountered installation issues while setting up the working environment using pip. So, I created the issue and Luciano Paz helped me out with other ways of installing PyMC4.
 
 ## Personal Projects
+
 1. Send to S3 - [Github](https://github.com/Sayam753/SendToS3) <br/>
 This python project sends backup files to AWS S3 bucket using Boto3. Searching for files is done by regex and results of logs are sent to email using smtplib.
 
