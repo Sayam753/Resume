@@ -146,7 +146,6 @@ Implemented a deep neural network from scratch in numpy with custom hyperparamet
 
 - Time Zone: UTC+05:30
 - Github Handle: [Sayam753](https://github.com/Sayam753)
-- Resume: [Google drive link](https://drive.google.com/file/d/1mrNC3qtieWKH1i2mhqH6xiFCt-EwGJ0b/view?usp=sharing), [Github link](https://github.com/Sayam753/Resume)
 - Contact details: [Gmail](sayamkumar049@gmail.com), [Yahoo](sayamkumar753@yahoo.in), [LinkedIn](https://www.linkedin.com/in/sayam049/), [Twitter](https://twitter.com/sayamkumar753), +91 9815247310 (Mobile)
 
 ### Personal Info
@@ -163,3 +162,4 @@ As I have no other projects/internships planned for summers, I can spend 40~50 h
 - [Automatic Variational Inference in Stan](https://arxiv.org/abs/1506.03431). Kucukelbir, A., Ranganath, R., Gelman, A., & Blei, D. (2015).
 - [Operator Variational Inference](https://arxiv.org/abs/1610.09033). Rajesh Ranganath, Jaan Altosaar, Dustin Tran, David M. Blei (2016).
 - [Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114). Kingma, D. P., & Welling, M. (2014).
+- [Weight Uncertainty in Neural Network](https://arxiv.org/abs/1505.05424). Blundell, C., Cornebise, J., Kavukcuoglu, K., & Wierstra, D. (2015).
