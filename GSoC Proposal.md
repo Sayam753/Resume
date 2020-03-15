@@ -1,5 +1,6 @@
-<h1 style="text-decoration:underline">GSoC Project Proposal</h1>
-<h1 style="text-decoration:underline">Add Variational Inference Interface to PyMC4</h1>
+# GSoC Project Proposal
+
+# Add Variational Inference Interface to PyMC4
 
 ## Description
 
