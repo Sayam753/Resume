@@ -42,7 +42,7 @@ Change the theme to `sphinx_rtd_theme` -
 html_theme = 'sphinx_rtd_theme'
 ```
 
-Close and save the file. Open file `index.rst` and `modules` name below toctree. This should look something like this - 
+Close and save the file. Open file `index.rst` and add `modules` name below toctree. This should look something like this - 
 
 ```bash
 .. toctree::
